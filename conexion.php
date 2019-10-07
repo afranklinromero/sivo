@@ -1,13 +1,17 @@
 <?php
-$db_servername = "localhost";
-$db_username = "root";
-$db_password ="";
-$db = "sivo";
 
-// Create connection
-function conectar(){
-$con = new mysqli($db_servername, $db_username, $db_password, $db);
+$dbHost = "localhost";
+$dbUsername = "root";
+$dbPassword ="";
+$dbName = "sivo";
 
 
-return $con;
+//  Create a new connection to the MySQL database using PDO
+$db = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName); 
+ 
+// Check connection 
+if ($db->connect_error) { 
+    die("Connection failed: " . $db->connect_error); 
 }
+?>
+
