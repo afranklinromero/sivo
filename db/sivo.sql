@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2019 a las 00:30:02
--- Versión del servidor: 10.4.6-MariaDB
--- Versión de PHP: 7.3.8
+-- Tiempo de generación: 08-10-2019 a las 04:09:58
+-- Versión del servidor: 10.3.16-MariaDB
+-- Versión de PHP: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +21,34 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sivo`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `candidato`
+--
+
+CREATE TABLE `candidato` (
+  `id_candidato` int(11) NOT NULL,
+  `sigla_candidato` varchar(50) NOT NULL,
+  `nombre_candidato` varchar(50) NOT NULL,
+  `votos_total` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `candidato`
+--
+
+INSERT INTO `candidato` (`id_candidato`, `sigla_candidato`, `nombre_candidato`, `votos_total`) VALUES
+(1, 'CC', 'COMUNIDAD CIUDADANA', 0),
+(2, 'FPV', 'FRENTE PARA LA VICTORIA', 0),
+(3, 'MTS', 'MOVIMIENTO TERCER SISTEMA', 0),
+(4, 'UCS', 'UNIDAD CIVICA SOLIDARIA', 0),
+(5, 'MAS', 'MOVIMIENTO AL SOCIALISMO', 0),
+(6, 'BDN', 'BOLIVIA DICE NO', 0),
+(7, 'PDC', 'PARTIDO DEMOCRATA CRISTIANO', 0),
+(8, 'MNR', 'MOVIMIENTO NACIONALISTA REPUBLIANO', 0),
+(9, 'PB', 'PAN BOL', 0);
 
 -- --------------------------------------------------------
 
@@ -392,9 +420,30 @@ INSERT INTO `recintos` (`id_recinto`, `nombre_recinto`, `id_distrito`) VALUES
 (39, 'COL. OSCAR ARNULFO', 4),
 (40, 'COL. ANITA SUAREZ DE LEYGUE', 4);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `votos`
+--
+
+CREATE TABLE `votos` (
+  `id_voto` int(11) NOT NULL,
+  `id_candidato` int(11) NOT NULL,
+  `id_distrito` int(11) NOT NULL,
+  `id_mesa` int(11) NOT NULL,
+  `id_recinto` int(11) NOT NULL,
+  `votos` int(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `candidato`
+--
+ALTER TABLE `candidato`
+  ADD PRIMARY KEY (`id_candidato`);
 
 --
 -- Indices de la tabla `distrito`
@@ -415,8 +464,20 @@ ALTER TABLE `recintos`
   ADD PRIMARY KEY (`id_recinto`);
 
 --
+-- Indices de la tabla `votos`
+--
+ALTER TABLE `votos`
+  ADD PRIMARY KEY (`id_voto`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `candidato`
+--
+ALTER TABLE `candidato`
+  MODIFY `id_candidato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `distrito`
@@ -435,6 +496,12 @@ ALTER TABLE `mesas`
 --
 ALTER TABLE `recintos`
   MODIFY `id_recinto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT de la tabla `votos`
+--
+ALTER TABLE `votos`
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

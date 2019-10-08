@@ -105,8 +105,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/cc2.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_cc" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -115,8 +115,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/fpv.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_fpv" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -125,8 +125,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/mts.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_mts" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -136,8 +136,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/ucs.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title">Cristian Tejada</h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_ucs" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -146,8 +146,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/mas.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_mas" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -156,8 +156,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/bdn.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_bdn" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -166,8 +166,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/pdc.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_pdc" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -176,8 +176,8 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/mnr.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_mnr" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
@@ -186,22 +186,32 @@ $(document).ready(function(){
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/pb.jpg" alt="Card image cap">
               <div class="card-body">
-              <h6 class="card-title"></h6>
-              <input type="text" class="card-text" style="width: 100%;"> 
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_pb" class="card-text" style="width: 100%;"> 
               
             </div>
           </div>
         </div>
         </div>
-
+        <br>
         <button type="submit" name ="submit"  value="submit " class="btn btn-primary">Registrar Voto</button>
-        
+        <br>
         <?php
 
+
 if(isset($_POST['submit'])){ 
-    echo 'Selected Country ID: '.$_POST['distrito']." <br>";
-    echo 'Selected State ID: '.$_POST['recinto']." <br>"; 
-    echo 'Selected City ID: '.$_POST['mesa']." <br>"; 
+    echo 'Distrito ID: '.$_POST['distrito']." <br>";
+    echo 'Recinto ID: '.$_POST['recinto']." <br>"; 
+    echo 'Mesa ID: '.$_POST['mesa']." <br>"; 
+    echo 'Mesa ID: '.$_POST['voto_cc']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_fpv']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_mts']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_ucs']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_mas']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_bdn']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_pdc']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_mnr']." <br>";
+    echo 'Mesa ID: '.$_POST['voto_pb']." <br>"; 
     
 } 
 
