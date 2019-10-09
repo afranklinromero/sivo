@@ -64,7 +64,7 @@ $(document).ready(function(){
   </head>
   <body>
       <div class="container">
-    <form action ="" method="POST">
+    <form action ="registro.php" method="POST">
 
         <p>Datos: 634 Mesas 40 Recintos</p>
      
@@ -196,26 +196,7 @@ $(document).ready(function(){
         <br>
         <button type="submit" name ="submit"  value="submit " class="btn btn-primary">Registrar Voto</button>
         <br>
-        <?php
-
-
-if(isset($_POST['submit'])){ 
-    echo 'Distrito ID: '.$_POST['distrito']." <br>";
-    echo 'Recinto ID: '.$_POST['recinto']." <br>"; 
-    echo 'Mesa ID: '.$_POST['mesa']." <br>"; 
-    echo 'Mesa ID: '.$_POST['voto_cc']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_fpv']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_mts']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_ucs']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_mas']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_bdn']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_pdc']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_mnr']." <br>";
-    echo 'Mesa ID: '.$_POST['voto_pb']." <br>"; 
-    
-} 
-
-?>
+      
     </form>
 
 
