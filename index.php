@@ -62,8 +62,30 @@ $(document).ready(function(){
     </script>
   </head>
   <body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">SICOEL</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.php">Registro <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sivo/registro.php">Reporte</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+</nav>
       <div class="container">
     <form action ="" method="POST">
+
+
 
         <p>Datos: 634 Mesas 40 Recintos</p>
      
@@ -84,6 +106,7 @@ $(document).ready(function(){
                     
                     </select>
           </div>
+
         <div class="form-group col-md-12">
             <label >Recinto</label>
             <select id="recinto" name ="recinto"class="form-control">
@@ -99,8 +122,8 @@ $(document).ready(function(){
          
         </div>
 
-        <div class="row">
-        <div clas="col"> 
+        <div class="row justify-content-md-center">
+        <div clas="col col-md-6"> 
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/cc2.jpg" alt="Card image cap">
               <div class="card-body">
@@ -151,7 +174,7 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
-        <div clas="col col-md"> 
+        <div clas="col col-md6"> 
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/bdn.jpg" alt="Card image cap">
               <div class="card-body">
@@ -161,7 +184,11 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
-        <div clas="col"> 
+        </div>
+        <div class="row justify-content-md-center">
+
+        
+        <div clas="col col-md6"> 
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/pdc.jpg" alt="Card image cap">
               <div class="card-body">
@@ -194,7 +221,7 @@ $(document).ready(function(){
 
         <div clas="col"> 
         <div class="card" style="width: 7rem;">
-            <img class="card-img-top" src="doc/mnr.jpg" alt="Card image cap">
+            <img class="card-img-top" src="doc/blanco.jpg" alt="Card image cap">
               <div class="card-body">
               <h6 class="card-title text-center">Votos</h6>
               <input type="number" name="voto_blanco" class="card-text" style="width: 100%;"> 
@@ -205,7 +232,7 @@ $(document).ready(function(){
 
         <div clas="col"> 
         <div class="card" style="width: 7rem;">
-            <img class="card-img-top" src="doc/mnr.jpg" alt="Card image cap">
+            <img class="card-img-top" src="doc/nulo.jpg" alt="Card image cap">
               <div class="card-body">
               <h6 class="card-title text-center">Votos</h6>
               <input type="number" name="voto_nulo" class="card-text" style="width: 100%;"> 
