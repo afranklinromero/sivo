@@ -17,9 +17,9 @@ $result = $db->query($query);
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <script type="text/javascript" src="js/js.js" ></script>
     <title>Sistema de Votación</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.js"
+    <script  src="https://code.jquery.com/jquery-3.2.1.js" 
 integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
   </head>
   <body>
       <div class="container">
-    <form action ="registro.php" method="POST">
+    <form action ="" method="POST">
 
         <p>Datos: 634 Mesas 40 Recintos</p>
      
@@ -192,24 +192,115 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
+
+        <div clas="col"> 
+        <div class="card" style="width: 7rem;">
+            <img class="card-img-top" src="doc/mnr.jpg" alt="Card image cap">
+              <div class="card-body">
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_blanco" class="card-text" style="width: 100%;"> 
+              
+            </div>
+          </div>
         </div>
+
+        <div clas="col"> 
+        <div class="card" style="width: 7rem;">
+            <img class="card-img-top" src="doc/mnr.jpg" alt="Card image cap">
+              <div class="card-body">
+              <h6 class="card-title text-center">Votos</h6>
+              <input type="number" name="voto_nulo" class="card-text" style="width: 100%;"> 
+              
+            </div>
+          </div>
+        </div>
+            </div>
         <br>
         <button type="submit" name ="submit"  value="submit " class="btn btn-primary">Registrar Voto</button>
         <br>
-      
-    </form>
+        
+    </form> 
 
 
 
 
 
 
-  
+
     
-    </div>
+     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  
+    <?php
+error_reporting(0);
+require ("conexion.php");
+include ("datos.php");
+
+$cc_id = 1;
+$fpv_id = 2;
+$mts_id = 3;
+$ucs_id = 4;
+$mas_id = 5;
+$bdn_id = 6;
+$pdc_id = 7;
+$mnr_id = 8;
+$pb_id = 9;
+$blancos_id = 10;
+$nulos_id = 11;
+
+
+if(isset($_POST['submit'])){ 
+    $Distrito =(int) $_POST['distrito']." <br>";
+    $Recinto = $_POST['recinto']." <br>"; 
+    $Mesa = $_POST['mesa']." <br>"; 
+    $cc = (int)$_POST['voto_cc']." <br>";
+    $fpv = $_POST['voto_fpv']." <br>";
+    $mts = $_POST['voto_mts']." <br>";
+    $ucs = $_POST['voto_ucs']." <br>";
+    $mas = $_POST['voto_mas']." <br>";
+    $bdn = $_POST['voto_bdn']." <br>";
+    $pdc = $_POST['voto_pdc']." <br>";
+    $mnr =$_POST['voto_mnr']." <br>";
+    $pb= $_POST['voto_pb']." <br>"; 
+    $blancos= $_POST['voto_blanco']." <br>"; 
+    $nulos= $_POST['voto_nulo']." <br>"; 
+   
+
+
+
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$cc_id.'","'.$Mesa.'","'.$cc.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$fpv_id.'","'.$Mesa.'","'.$fpv.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$mts_id.'","'.$Mesa.'","'.$mts.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$ucs_id.'","'.$Mesa.'","'.$ucs.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$mas_id.'","'.$Mesa.'","'.$mas.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$bdn_id.'","'.$Mesa.'","'.$bdn.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$pdc_id.'","'.$Mesa.'","'.$pdc.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$mnr_id.'","'.$Mesa.'","'.$mnr.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$pb_id.'","'.$Mesa.'","'.$pb.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$blancos_id.'","'.$Mesa.'","'.$blancos.'")');
+ $db->query($sql) ;
+ $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$nulos_id.'","'.$Mesa.'","'.$nulos.'")');
+  $db->query($sql) ;
+ 
+}
+
+
+
+
+
+
+
+?>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
