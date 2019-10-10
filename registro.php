@@ -2,9 +2,9 @@
 error_reporting(0);
 require ("conexion.php");
 include ("datos.php");
-require_once ( "conf.php" ) ; // esto debe incluirse en cada página que use phpChart.
+include("fusioncharts.php");
 
-$sql = ("SELECT `id_candidato`, SUM(`cantidad`) FROM `votos` GROUP BY (`id_candidato`)");
+$sql = ("SELECT candidato.sigla_candidato , SUM(votos.cantidad) as total FROM votos inner JOIN candidato ON (votos.id_candidato=candidato.id_candidato) GROUP BY (candidato.sigla_candidato)");
 $result = $db->query($sql) ;
 
 ?>
@@ -22,6 +22,57 @@ $result = $db->query($sql) ;
     <title>Sistema de Votación</title>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     
+    <script src="js/fusioncharts.js"></script>
+
+        
+    <script src="js/themes/fusioncharts.theme.fusion.js"></script>
+<!--<script>
+            const dataSource = {
+            chart: {
+                caption: "Recommended Portfolio Split",
+                subcaption: "For a net-worth of $1M",
+                showvalues: "1",
+                showpercentintooltip: "0",
+                numberprefix: "$",
+                enablemultislicing: "1",
+                theme: "fusion"
+            },
+            data: [
+                {
+                label: "Equity",
+                value: "300000"
+                },
+                {
+                label: "Debt",
+                value: "230000"
+                },
+                {
+                label: "Bullion",
+                value: "180000"
+                },
+                {
+                label: "Real-estate",
+                value: "270000"
+                },
+                {
+                label: "Insurance",
+                value: "20000"
+                }
+            ]
+            };
+
+        FusionCharts.ready(function() {
+        var myChart = new FusionCharts({
+            type: "pie3d",
+            renderAt: "chart-contenedor",
+            width: "100%",
+            height: "100%",
+            dataFormat: "json",
+            dataSource
+        }).render();
+        });
+
+    </script> -->
     
     </head>
 <body>
@@ -30,7 +81,7 @@ $result = $db->query($sql) ;
   <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+     
       <th scope="col">Sigla</th>
       <th scope="col">Votos</th>
       
@@ -41,13 +92,17 @@ $result = $db->query($sql) ;
     if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) { 
-        $id_candidato =  $row["id_candidato"];
-        $resultado = $row["SUM(`cantidad`)"];
+        $id_sigla =  $row["sigla_candidato"];
+        $resultado = $row["total"];
         ?>
     <tr>
-      <th scope="row">1</th>
-         <td><?php echo $id_candidato; ?></td>
-         <td><?php echo $resultado?></td>
+     
+         <td><?php echo $id_sigla; ?></td>
+
+         <td><?php echo $resultado;
+          $sql = ('UPDATE `candidato` SET `total_votos`="'.$resultado.'" WHERE `id_candidato` = "'.$id_candidato.'"');
+            $db->query($sql) ; 
+    ?> </td>
     </tr>
     <?php 
         }
@@ -65,11 +120,125 @@ $result = $db->query($sql) ;
 
 </div>
 <div id="container" style="height: 400px">
+
+
 <?php
- $HOLA=0;
- $pc = new C_PhpChartX(array(array(11, 9, 5, 12, 14)),'basic_chart');
-$pc->draw();
+
+$sql = ("SELECT `sigla_candidato`, `total_votos` FROM `candidato`");
+$result = $db->query($sql) ;
+$arrChartConfig = array(
+    "chart" => array(
+        "caption" => "VOTACION ELECCION DIPUTADOS 2019",
+        "subCaption" => "C-51",
+        "xAxisName" => "BOLIVIA",
+        "yAxisName" => "VOTOS",
+        "numberSuffix" => "",
+        "theme" => "fusion"
+    )
+);
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) { 
+        $total[]  =  $row["total_votos"];
+        $sigla[]  =  $row["sigla_candidato"];
+
+        
+    }
+    
+}
+
+
+
+// An array of hash objects which stores data
+$arrChartData = array(
+    [$sigla[0], $total[0]],
+    [$sigla[1], $total[1]],
+    [$sigla[2], $total[2]],
+    [$sigla[3], $total[3]],
+    [$sigla[4], $total[4]],
+    [$sigla[5], $total[5]],
+    [$sigla[6], $total[6]],
+    [$sigla[7], $total[7]],
+    [$sigla[8], $total[8]],
+    [$sigla[9], $total[9]],
+    [$sigla[10], $total[10]],
+    [$sigla[11], $total[11]],
+   
+   
+);
+  
+$arrLabelValueData = array();
+
+// Pushing labels and values
+for($i = 0; $i < count($arrChartData); $i++) {
+    array_push($arrLabelValueData, array(
+        "label" => $arrChartData[$i][0], "value" => $arrChartData[$i][1]
+    ));
+}
+
+
+
+$arrChartConfig["data"] = $arrLabelValueData;
+
+// JSON Encode the data to retrieve the string containing the JSON representation of the data in the array.
+$jsonEncodedData = json_encode($arrChartConfig);
+
+// chart object
+$Chart = new FusionCharts("column2d", "MyFirstChart" , "700", "400", "chart-container", "json", $jsonEncodedData);
+
+// Render the chart
+$Chart->render();
+
+
 ?>
+
+
+
+    <div id="chart-container">Chart will render here!</div>
+
+
+    <?php
+              
+
+                $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-1", "json", '{
+                "chart": {
+                    "caption": "Recommended Portfolio Split",
+                    "subcaption": "For a net-worth of $1M",
+                    "showvalues": "1",
+                    "showpercentintooltip": "0",
+                    "numberprefix": "$",
+                    "enablemultislicing": "1",
+                    "theme": "fusion"
+                },
+                "data": [
+                    {
+                    "label": "Equity",
+                    "value": "300000"
+                    },
+                    {
+                    "label": "Debt",
+                    "value": "230000"
+                    },
+                    {
+                    "label": "Bullion",
+                    "value": "180000"
+                    },
+                    {
+                    "label": "Real-estate",
+                    "value": "270000"
+                    },
+                    {
+                    "label": "Insurance",
+                    "value": "20000"
+                    }
+                ]
+                }');
+
+                $columnChart->render();
+?>
+
+    <div id="chart-1" style ="width :60%;" ></div>
+
 
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
