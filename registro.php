@@ -4,7 +4,7 @@ require ("conexion.php");
 include ("datos.php");
 include("fusioncharts.php");
 
-$sql = ("SELECT candidato.sigla_candidato , SUM(votos.cantidad) as total FROM votos inner JOIN candidato ON (votos.id_candidato=candidato.id_candidato) GROUP BY (candidato.sigla_candidato)");
+$sql = ("SELECT candidato.nombre_candidato, candidato.sigla_candidato , SUM(votos.cantidad) as total FROM votos inner JOIN candidato ON (votos.id_candidato=candidato.id_candidato) GROUP BY (candidato.sigla_candidato)");
 $result = $db->query($sql) ;
 
 ?>
@@ -50,13 +50,12 @@ $result = $db->query($sql) ;
   </div>
 </nav>
 <div class="container ">
-
-
-        <div clas="col col-md-12 "> 
-            <table class="table">
+    
+            <table class="table table-striped">
             <thead>
                 <tr>
                 
+                <th scope="col">Partido</th>
                 <th scope="col">Sigla</th>
                 <th scope="col">Votos</th>
                 
@@ -69,9 +68,12 @@ $result = $db->query($sql) ;
                 while($row = $result->fetch_assoc()) { 
                     $id_sigla =  $row["sigla_candidato"];
                     $resultado = $row["total"];
+                    $partido = $row["nombre_candidato"];
                     ?>
-                <tr>
                 
+                
+                <tr>
+                    <td><?php echo $partido; ?></td>
                     <td><?php echo $id_sigla; ?></td>
 
                     <td><?php echo $resultado;
@@ -91,11 +93,18 @@ $result = $db->query($sql) ;
             </tbody>
             </table>
        
-        </div>
-        <div class="row">
-            <div clas="col-md-auto align-items-center"> 
-                    
-                    <?php
+</div>  
+
+
+
+
+
+
+
+
+
+    
+         <?php
 
                         $sql = ("SELECT `sigla_candidato`, `total_votos` FROM `candidato`");
                         $result = $db->query($sql) ;
@@ -164,22 +173,92 @@ $result = $db->query($sql) ;
                         $Chart->render();
 
 
-                    ?>
-            </div>
-        
-        <div clas="col-md-auto align-items-center"> 
-            <div id="chart-container">Chart will render here!</div>
-        </div>
-</div>
-
-
-
-
-
+            ?>
+   
+    <div class="row justify-content-md-center">
 
     
+        
+    <div clas="col"> 
+                    
+                    <div id="chart-2" style ="width :20%;" ></div>
+                </div>
+           
+            <?php
+        
+                            if ($result->num_rows > 0) {
+                                // output data of each row
+                                while($row = $result->fetch_assoc()) { 
+                                    $total[]  =  $row["total_votos"];
+                                    $sigla[]  =  $row["sigla_candidato"];
+        
+                                    
+                                }
+                                
+                            }
+        
+                            $ChartData = "{
+                                \"chart\": {
+                                \"showValues\":\"1\",
+                                \"showPercentInTooltip\" : \"0\",
+                                \"numberPrefix\" : \"\",
+                                \"enableMultiSlicing\":\"1\",
+                                \"theme\": \"fusion\"
+                                },
+                                \"data\": [{
+                                    \"label\": \"$sigla[0]\",
+                                    \"value\": \"$total[0]\"
+                                }, {
+                                    \"label\":\"$sigla[1]\",
+                                    \"value\": \"$total[1]\"
+                                }, {
+                                    \"label\": \"$sigla[2]\",
+                                    \"value\": \"$total[2]\"
+                                }, {
+                                    \"label\": \"$sigla[7]\",
+                                    \"value\": \"$total[7]\"
+                                }, {
+                                    \"label\": \"$sigla[4]\",
+                                    \"value\": \"$total[4]\"
+                                }, {
+                                    \"label\": \"$sigla[5]\",
+                                    \"value\": \"$total[5]\"
+                                }, {
+                                    \"label\": \"$sigla[3]\",
+                                    \"value\": \"$total[3]\"
+                                }, {
+                                    \"label\": \"$sigla[6]\",
+                                    \"value\": \"$total[6]\"
+                                }, {
+                                    \"label\": \"$sigla[8]\",
+                                    \"value\": \"$total[8]\"
+                                }, {
+                                    \"label\": \"$sigla[9]\",
+                                    \"value\": \"$total[9]\"
+                                }, {
+                                    \"label\": \"$sigla[10]\",
+                                    \"value\": \"$total[10]\"
+                                }, {
+                                    \"label\": \"$sigla[11]\",
+                                    \"value\": \"$total[11]\"
+                                }]
+                                }" ;
+        
+                            $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-2", "json",$ChartData);
+                            $columnChart->render();
+            ?>
+    
+    
+    <div clas="col"> 
+            <div id="chart-container">Chart will render here!</div>
+        </div>
+    
 
-
+        <div clas="col"> 
+                    
+            <div id="chart-1" style ="width :20%;" ></div>
+        </div>
+    </div>
     <?php
 
                     if ($result->num_rows > 0) {
@@ -195,45 +274,56 @@ $result = $db->query($sql) ;
 
                     $ChartData = "{
                         \"chart\": {
-                          \"showValues\":\"1\",
-                          \"showPercentInTooltip\" : \"0\",
-                          \"numberPrefix\" : \"$\",
-                          \"enableMultiSlicing\":\"1\",
-                          \"theme\": \"fusion\"
+                        \"showValues\":\"1\",
+                        \"showPercentInTooltip\" : \"0\",
+                        \"numberPrefix\" : \"\",
+                        \"enableMultiSlicing\":\"1\",
+                        \"theme\": \"fusion\"
                         },
                         \"data\": [{
                             \"label\": \"$sigla[0]\",
                             \"value\": \"$total[0]\"
-                          }, {
+                        }, {
                             \"label\":\"$sigla[1]\",
                             \"value\": \"$total[1]\"
-                          }, {
+                        }, {
                             \"label\": \"$sigla[2]\",
                             \"value\": \"$total[2]\"
-                          }, {
-                            \"label\": \"$sigla[3]\",
-                            \"value\": \"$total[3]\"
-                          }, {
+                        }, {
+                            \"label\": \"$sigla[7]\",
+                            \"value\": \"$total[7]\"
+                        }, {
                             \"label\": \"$sigla[4]\",
                             \"value\": \"$total[4]\"
-                          }]
+                        }, {
+                            \"label\": \"$sigla[5]\",
+                            \"value\": \"$total[5]\"
+                        }, {
+                            \"label\": \"$sigla[3]\",
+                            \"value\": \"$total[3]\"
+                        }, {
+                            \"label\": \"$sigla[6]\",
+                            \"value\": \"$total[6]\"
+                        }, {
+                            \"label\": \"$sigla[8]\",
+                            \"value\": \"$total[8]\"
+                        }, {
+                            \"label\": \"$sigla[9]\",
+                            \"value\": \"$total[9]\"
+                        }, {
+                            \"label\": \"$sigla[10]\",
+                            \"value\": \"$total[10]\"
+                        }, {
+                            \"label\": \"$sigla[11]\",
+                            \"value\": \"$total[11]\"
+                        }]
                         }" ;
-                   
-                $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-1", "json",$ChartData);
-                
-              
-  
-                    
-                
-                
 
-                $columnChart->render();
-?>
-
-    <div id="chart-1" style ="width :100%;" ></div>
+                    $columnChart = new FusionCharts("column3d", "ex1", "100%", 400, "chart-1", "json",$ChartData);
+                    $columnChart->render();
+    ?>
 
 
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>

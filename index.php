@@ -18,121 +18,120 @@ $result = $db->query($query);
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+    <link real="stylesheet" href="css/style.css">
     <title>Sistema de Votación</title>
     <script  src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script type="text/javascript">
 
-$(document).ready(function(){
-    $('#distrito').on('change', function(){
-        var distritoID = $(this).val();
-        if(distritoID){
-         
-            $.ajax({
-                type:'POST',
-                url:'datos.php',
-                data:'distrito_id='+distritoID,
-                success:function(html){
-                    $('#recinto').html(html);
-                    $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
-                }
-            }); 
-        }else{
-            $('#recinto').html('<option value="">Selecciona primero Recinto</option>');
-            $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
-        }
-    });
-    
-    $('#recinto').on('change', function(){
-        var recintoID = $(this).val();
-        if(recintoID){
-            $.ajax({
-                type:'POST',
-                url:'datos.php',
-                data:'recinto_id='+recintoID,
-                success:function(html){
-                    $('#mesa').html(html);
-                }
-            }); 
-        }else{
-            $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
-        }
-    });
-});
+          $(document).ready(function(){
+              $('#distrito').on('change', function(){
+                  var distritoID = $(this).val();
+                  if(distritoID){
+                  
+                      $.ajax({
+                          type:'POST',
+                          url:'datos.php',
+                          data:'distrito_id='+distritoID,
+                          success:function(html){
+                              $('#recinto').html(html);
+                              $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
+                          }
+                      }); 
+                  }else{
+                      $('#recinto').html('<option value="">Selecciona primero Recinto</option>');
+                      $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
+                  }
+              });
+              
+              $('#recinto').on('change', function(){
+                  var recintoID = $(this).val();
+                  if(recintoID){
+                      $.ajax({
+                          type:'POST',
+                          url:'datos.php',
+                          data:'recinto_id='+recintoID,
+                          success:function(html){
+                              $('#mesa').html(html);
+                          }
+                      }); 
+                  }else{
+                      $('#mesa').html('<option value="">Selecciona primero Recinto</option>'); 
+                  }
+              });
+          });
 
     </script>
   </head>
   <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">SICOEL</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="#">SICOEL</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.php">Registro <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/sivo/registro.php">Reporte</a>
-      </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.php">Registro <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sivo/registro.php">Reporte</a>
+        </li>
+        
+      </ul>
       
-    </ul>
-    
-  </div>
-</nav>
-      <div class="container">
+    </div>
+  </nav>
+  
     <form action ="" method="POST">
-
-
-
-        <p>Datos: <?php $sql = "SELECT * FROM mesas where estado='1'"; 
-                        $suma = $db->query($sql) ;
-                        $total = $suma->num_rows;
-                        echo $total;
-      ?> 
-        Mesas aun fatan regitrar</p>
-     
-        <div class="form-row">
-          <div class="form-group col-md-12">
-              <label >Distrito</label>
-              <select id="distrito" name ="distrito" class="form-control">
-                      <option value=" ">Selecciona el Distrito </option>
-                      <?php 
-                          if($result->num_rows > 0){ 
-                          while($row = $result->fetch_assoc()){  
-                            echo '<option value="'.$row['id_distrito'].'">'.$row['numero_distrito'].'</option>'; 
+      <div class="container">
+            <p>Datos: <?php $sql = "SELECT * FROM mesas where estado='1'"; 
+                            $suma = $db->query($sql) ;
+                            $total = $suma->num_rows;
+                            echo $total;
+                      ?> 
+            Mesas aun fatan regitrar</p>
+        
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label >Distrito</label>
+                      <select id="distrito" name ="distrito" class="form-control">
+                          <option value=" ">Selecciona el Distrito </option>
+                          <?php 
+                              if($result->num_rows > 0){ 
+                              while($row = $result->fetch_assoc()){  
+                                echo '<option value="'.$row['id_distrito'].'">'.$row['numero_distrito'].'</option>'; 
+                                } 
+                              }else{ 
+                            echo '<option value="">no hay distritos</option>'; 
                             } 
-                          }else{ 
-                        echo '<option value="">no hay distritos</option>'; 
-                        } 
-                        ?>
-                    
-                    </select>
-          </div>
+                            ?>
+                        
+                        </select>
+              </div>
 
-        <div class="form-group col-md-12">
-            <label >Recinto</label>
-            <select id="recinto" name ="recinto"class="form-control">
-            <option value=" ">Selecciona primero Distrito </option>
+              <div class="form-group col-md-12">
+                  <label >Recinto</label>
+                  <select id="recinto" name ="recinto"class="form-control">
+                  <option value=" ">Selecciona primero Distrito </option>
+                        </select>
+              </div>
+              <div class="form-group col-md-4">
+                  <label >Mesa</label>
+                  <select id="mesa" name ="mesa" class="form-control">
+                  <option value=" ">Selecciona primero Distrito </option>
                   </select>
-          </div>
-          <div class="form-group col-md-4">
-            <label >Mesa</label>
-            <select id="mesa" name ="mesa" class="form-control">
-            <option value=" ">Selecciona primero Distrito </option>
-            </select>
-          </div>
-         
-        </div>
-
-        <div class="row justify-content-md-center">
-        <div clas="col col-md-6"> 
-        <div class="card" style="width: 7rem;">
-            <img class="card-img-top" src="doc/cc2.jpg" alt="Card image cap">
-              <div class="card-body">
+              </div>
+            
+            </div>
+      </div>
+<div class="">
+        <div class="row justify-content-center align-items-center ">
+            <div clas="col"> 
+                <div class="card" style="width: 7rem;">
+                    <img class="card-img-top" src="doc/cc2.jpg" alt="Card image cap">
+                <div class="card-body">
               <h6 class="card-title text-center">Votos</h6>
               <input type="number" name="voto_cc" class="card-text" style="width: 100%;"> 
               
@@ -180,7 +179,7 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
-        <div clas="col col-md6"> 
+        <div clas="col"> 
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/bdn.jpg" alt="Card image cap">
               <div class="card-body">
@@ -190,11 +189,11 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
-        </div>
-        <div class="row justify-content-md-center">
+        
+        
 
         
-        <div clas="col col-md6"> 
+        <div clas="col"> 
         <div class="card" style="width: 7rem;">
             <img class="card-img-top" src="doc/pdc.jpg" alt="Card image cap">
               <div class="card-body">
@@ -246,11 +245,13 @@ $(document).ready(function(){
             </div>
           </div>
         </div>
-            </div>
+      </div>
         <br>
-        <button type="submit" name ="submit"  value="submit " class="btn btn-primary">Registrar Voto</button>
+        <div class="container">
+        <button type="submit" name ="submit"  value="submit " class="btn btn-primary ">Registrar Voto</button>
         <br>
-        
+                          </div>
+  </div>
     </form> 
 
 
@@ -326,7 +327,7 @@ if(isset($_POST['submit'])){
   $sql = ("UPDATE mesas SET estado= 0 WHERE id_mesa ='".$Mesa."'");
   $db->query($sql) ;
 
-  echo $sql;
+ 
 
 }
 
@@ -337,6 +338,8 @@ if(isset($_POST['submit'])){
 
 
 ?>
+<br>
+<br>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
