@@ -2,7 +2,7 @@
 error_reporting(0);
 require ("conexion.php");
 include ("datos.php");
-include("fusioncharts.php");
+include ("fusioncharts.php");
 
 $sql = ("SELECT candidato.nombre_candidato, candidato.sigla_candidato , SUM(votos.cantidad) as total FROM votos inner JOIN candidato ON (votos.id_candidato=candidato.id_candidato) GROUP BY (candidato.sigla_candidato)");
 $result = $db->query($sql) ;
@@ -41,9 +41,13 @@ $result = $db->query($sql) ;
       <li class="nav-item ">
         <a class="nav-link" href="index.php">Registro <span class="sr-only">(current)</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/sivo/avance.php">Avance</a>
+      </li>
       <li class="nav-item active">
         <a class="nav-link" href="/sivo/registro.php">Reporte</a>
       </li>
+      
       
     </ul>
     
@@ -112,7 +116,7 @@ $result = $db->query($sql) ;
                             "chart" => array(
                                 "caption" => "VOTACION ELECCION DIPUTADOS 2019",
                                 "subCaption" => "C-51",
-                                "xAxisName" => "BOLIVIA",
+                                "xAxisName" => "Candidatos BOLIVIA",
                                 "yAxisName" => "VOTOS",
                                 "numberSuffix" => "",
                                 "theme" => "fusion"
@@ -129,11 +133,8 @@ $result = $db->query($sql) ;
                             
                         }
 
-
-
                         // An array of hash objects which stores data
-                        
-                        $arrChartData = array(
+                            $arrChartData = array(
                             [$sigla[0], $total[0]],
                             [$sigla[1], $total[1]],
                             [$sigla[2], $total[2]],
@@ -167,7 +168,7 @@ $result = $db->query($sql) ;
                         $jsonEncodedData = json_encode($arrChartConfig);
 
                         // chart object
-                        $Chart = new FusionCharts("column2d", "MyFirstChart" , "700", "400", "chart-container", "json", $jsonEncodedData);
+                        $Chart = new FusionCharts("column3d", "MyFirstChart" , "700", "400", "chart-container", "json", $jsonEncodedData);
 
                         // Render the chart
                         $Chart->render();
@@ -175,14 +176,15 @@ $result = $db->query($sql) ;
 
             ?>
    
-    <div class="row justify-content-md-center">
-
     
-        
+   
+   
+   <div class="row justify-content-md-center">
+   
     <div clas="col"> 
                     
                     <div id="chart-2" style ="width :20%;" ></div>
-                </div>
+    </div>
            
             <?php
         
@@ -249,79 +251,16 @@ $result = $db->query($sql) ;
             ?>
     
     
-    <div clas="col"> 
-            <div id="chart-container">Chart will render here!</div>
-        </div>
+    
+                <div clas="col"> 
+                        <div id="chart-container">Chart will render here!</div>
+                </div>
     
 
-        <div clas="col"> 
-                    
-            <div id="chart-1" style ="width :20%;" ></div>
-        </div>
-    </div>
-    <?php
+        
+     </div>
+ 
 
-                    if ($result->num_rows > 0) {
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) { 
-                            $total[]  =  $row["total_votos"];
-                            $sigla[]  =  $row["sigla_candidato"];
-
-                            
-                        }
-                        
-                    }
-
-                    $ChartData = "{
-                        \"chart\": {
-                        \"showValues\":\"1\",
-                        \"showPercentInTooltip\" : \"0\",
-                        \"numberPrefix\" : \"\",
-                        \"enableMultiSlicing\":\"1\",
-                        \"theme\": \"fusion\"
-                        },
-                        \"data\": [{
-                            \"label\": \"$sigla[0]\",
-                            \"value\": \"$total[0]\"
-                        }, {
-                            \"label\":\"$sigla[1]\",
-                            \"value\": \"$total[1]\"
-                        }, {
-                            \"label\": \"$sigla[2]\",
-                            \"value\": \"$total[2]\"
-                        }, {
-                            \"label\": \"$sigla[7]\",
-                            \"value\": \"$total[7]\"
-                        }, {
-                            \"label\": \"$sigla[4]\",
-                            \"value\": \"$total[4]\"
-                        }, {
-                            \"label\": \"$sigla[5]\",
-                            \"value\": \"$total[5]\"
-                        }, {
-                            \"label\": \"$sigla[3]\",
-                            \"value\": \"$total[3]\"
-                        }, {
-                            \"label\": \"$sigla[6]\",
-                            \"value\": \"$total[6]\"
-                        }, {
-                            \"label\": \"$sigla[8]\",
-                            \"value\": \"$total[8]\"
-                        }, {
-                            \"label\": \"$sigla[9]\",
-                            \"value\": \"$total[9]\"
-                        }, {
-                            \"label\": \"$sigla[10]\",
-                            \"value\": \"$total[10]\"
-                        }, {
-                            \"label\": \"$sigla[11]\",
-                            \"value\": \"$total[11]\"
-                        }]
-                        }" ;
-
-                    $columnChart = new FusionCharts("column3d", "ex1", "100%", 400, "chart-1", "json",$ChartData);
-                    $columnChart->render();
-    ?>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

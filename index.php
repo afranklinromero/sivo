@@ -2,6 +2,7 @@
 
 include ("conexion.php");
 include ("datos.php");
+include ("fusioncharts.php");
 
 $query = "SELECT * FROM distrito"; 
 $result = $db->query($query); 
@@ -21,6 +22,10 @@ $result = $db->query($query);
     <link real="stylesheet" href="css/style.css">
     <title>Sistema de Votación</title>
     <script  src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="js/fusioncharts.js"></script>
+
+        
+    <script src="js/themes/fusioncharts.theme.fusion.js"></script>
     <script type="text/javascript">
 
           $(document).ready(function(){
@@ -75,6 +80,9 @@ $result = $db->query($query);
         <li class="nav-item active">
           <a class="nav-link" href="index.php">Registro <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/sivo/avance.php">Avance</a>
+      </li>
         <li class="nav-item">
           <a class="nav-link" href="/sivo/registro.php">Reporte</a>
         </li>
@@ -340,6 +348,8 @@ if(isset($_POST['submit'])){
 ?>
 <br>
 <br>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
