@@ -6,6 +6,7 @@ include ("datos.php");
 $query = "SELECT * FROM distrito"; 
 $result = $db->query($query); 
 
+
 ?>
 
 <!doctype html>
@@ -87,7 +88,12 @@ $(document).ready(function(){
 
 
 
-        <p>Datos: 634 Mesas 40 Recintos</p>
+        <p>Datos: <?php $sql = "SELECT * FROM mesas where estado='1'"; 
+                        $suma = $db->query($sql) ;
+                        $total = $suma->num_rows;
+                        echo $total;
+      ?> 
+        Mesas aun fatan regitrar</p>
      
         <div class="form-row">
           <div class="form-group col-md-12">
@@ -317,6 +323,11 @@ if(isset($_POST['submit'])){
  $sql = ('INSERT INTO `votos`(`id_candidato`, `id_mesa`, `cantidad`) VALUES ("'.$nulos_id.'","'.$Mesa.'","'.$nulos.'")');
   $db->query($sql) ;
  
+  $sql = ("UPDATE mesas SET estado= 0 WHERE id_mesa ='".$Mesa."'");
+  $db->query($sql) ;
+
+  echo $sql;
+
 }
 
 

@@ -26,54 +26,7 @@ $result = $db->query($sql) ;
 
         
     <script src="js/themes/fusioncharts.theme.fusion.js"></script>
-<!--<script>
-            const dataSource = {
-            chart: {
-                caption: "Recommended Portfolio Split",
-                subcaption: "For a net-worth of $1M",
-                showvalues: "1",
-                showpercentintooltip: "0",
-                numberprefix: "$",
-                enablemultislicing: "1",
-                theme: "fusion"
-            },
-            data: [
-                {
-                label: "Equity",
-                value: "300000"
-                },
-                {
-                label: "Debt",
-                value: "230000"
-                },
-                {
-                label: "Bullion",
-                value: "180000"
-                },
-                {
-                label: "Real-estate",
-                value: "270000"
-                },
-                {
-                label: "Insurance",
-                value: "20000"
-                }
-            ]
-            };
 
-        FusionCharts.ready(function() {
-        var myChart = new FusionCharts({
-            type: "pie3d",
-            renderAt: "chart-contenedor",
-            width: "100%",
-            height: "100%",
-            dataFormat: "json",
-            dataSource
-        }).render();
-        });
-
-    </script> -->
-    
     </head>
 <body>
 
@@ -122,7 +75,7 @@ $result = $db->query($sql) ;
                     <td><?php echo $id_sigla; ?></td>
 
                     <td><?php echo $resultado;
-                    $sql = ('UPDATE `candidato` SET `total_votos`="'.$resultado.'" WHERE `id_candidato` = "'.$id_candidato.'"');
+                    $sql = ('UPDATE `candidato` SET `total_votos`="'.$resultado.'" WHERE `sigla_candidato` = "'.$id_sigla.'"');
                         $db->query($sql) ; 
                 ?> </td>
                 </tr>
@@ -138,84 +91,85 @@ $result = $db->query($sql) ;
             </tbody>
             </table>
        
-            </div>
+        </div>
         <div class="row">
-        <div clas="col-md-auto align-items-center"> 
-            <div id="container" style="height: 400px">
-            
-                <?php
+            <div clas="col-md-auto align-items-center"> 
+                    
+                    <?php
 
-                    $sql = ("SELECT `sigla_candidato`, `total_votos` FROM `candidato`");
-                    $result = $db->query($sql) ;
-                    $arrChartConfig = array(
-                        "chart" => array(
-                            "caption" => "VOTACION ELECCION DIPUTADOS 2019",
-                            "subCaption" => "C-51",
-                            "xAxisName" => "BOLIVIA",
-                            "yAxisName" => "VOTOS",
-                            "numberSuffix" => "",
-                            "theme" => "fusion"
-                        )
-                    );
-                    if ($result->num_rows > 0) {
-                        // output data of each row
-                        while($row = $result->fetch_assoc()) { 
-                            $total[]  =  $row["total_votos"];
-                            $sigla[]  =  $row["sigla_candidato"];
+                        $sql = ("SELECT `sigla_candidato`, `total_votos` FROM `candidato`");
+                        $result = $db->query($sql) ;
+                        $arrChartConfig = array(
+                            "chart" => array(
+                                "caption" => "VOTACION ELECCION DIPUTADOS 2019",
+                                "subCaption" => "C-51",
+                                "xAxisName" => "BOLIVIA",
+                                "yAxisName" => "VOTOS",
+                                "numberSuffix" => "",
+                                "theme" => "fusion"
+                            )
+                        );
+                        if ($result->num_rows > 0) {
+                            // output data of each row
+                            while($row = $result->fetch_assoc()) { 
+                                $total[]  =  $row["total_votos"];
+                                $sigla[]  =  $row["sigla_candidato"];
 
+                                
+                            }
                             
                         }
+
+
+
+                        // An array of hash objects which stores data
                         
-                    }
+                        $arrChartData = array(
+                            [$sigla[0], $total[0]],
+                            [$sigla[1], $total[1]],
+                            [$sigla[2], $total[2]],
+                            [$sigla[3], $total[3]],
+                            [$sigla[4], $total[4]],
+                            [$sigla[5], $total[5]],
+                            [$sigla[6], $total[6]],
+                            [$sigla[7], $total[7]],
+                            [$sigla[8], $total[8]],
+                            [$sigla[9], $total[9]],
+                            [$sigla[10], $total[10]],
+                            [$sigla[11], $total[11]],
+
+
+                        );
+
+                        $arrLabelValueData = array();
+
+                        // Pushing labels and values
+                        for($i = 0; $i < count($arrChartData); $i++) {
+                            array_push($arrLabelValueData, array(
+                                "label" => $arrChartData[$i][0], "value" => $arrChartData[$i][1]
+                            ));
+                        }
 
 
 
-                    // An array of hash objects which stores data
-                    $arrChartData = array(
-                        [$sigla[0], $total[0]],
-                        [$sigla[1], $total[1]],
-                        [$sigla[2], $total[2]],
-                        [$sigla[3], $total[3]],
-                        [$sigla[4], $total[4]],
-                        [$sigla[5], $total[5]],
-                        [$sigla[6], $total[6]],
-                        [$sigla[7], $total[7]],
-                        [$sigla[8], $total[8]],
-                        [$sigla[9], $total[9]],
-                        [$sigla[10], $total[10]],
-                        [$sigla[11], $total[11]],
+                        $arrChartConfig["data"] = $arrLabelValueData;
+
+                        // JSON Encode the data to retrieve the string containing the JSON representation of the data in the array.
+                        $jsonEncodedData = json_encode($arrChartConfig);
+
+                        // chart object
+                        $Chart = new FusionCharts("column2d", "MyFirstChart" , "700", "400", "chart-container", "json", $jsonEncodedData);
+
+                        // Render the chart
+                        $Chart->render();
 
 
-                    );
-
-                    $arrLabelValueData = array();
-
-                    // Pushing labels and values
-                    for($i = 0; $i < count($arrChartData); $i++) {
-                        array_push($arrLabelValueData, array(
-                            "label" => $arrChartData[$i][0], "value" => $arrChartData[$i][1]
-                        ));
-                    }
-
-
-
-                    $arrChartConfig["data"] = $arrLabelValueData;
-
-                    // JSON Encode the data to retrieve the string containing the JSON representation of the data in the array.
-                    $jsonEncodedData = json_encode($arrChartConfig);
-
-                    // chart object
-                    $Chart = new FusionCharts("column2d", "MyFirstChart" , "700", "400", "chart-container", "json", $jsonEncodedData);
-
-                    // Render the chart
-                    $Chart->render();
-
-
-                ?>
-            <div>
-        </div>
+                    ?>
+            </div>
+        
         <div clas="col-md-auto align-items-center"> 
             <div id="chart-container">Chart will render here!</div>
+        </div>
 </div>
 
 
@@ -227,41 +181,51 @@ $result = $db->query($sql) ;
 
 
     <?php
-              
 
-                $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-1", "json", '{
-                "chart": {
-                    
-                    
-                    "showvalues": "1",
-                    "showpercentintooltip": "0",
-                    "numberprefix": "$",
-                    "enablemultislicing": "1",
-                    "theme": "fusion"
-                },
-                "data": [
-                    {
-                    "label": "Equity",
-                    "value": "300000"
-                    },
-                    {
-                    "label": "Debt",
-                    "value": "230000"
-                    },
-                    {
-                    "label": "Bullion",
-                    "value": "180000"
-                    },
-                    {
-                    "label": "Real-estate",
-                    "value": "270000"
-                    },
-                    {
-                    "label": "Insurance",
-                    "value": "20000"
+                    if ($result->num_rows > 0) {
+                        // output data of each row
+                        while($row = $result->fetch_assoc()) { 
+                            $total[]  =  $row["total_votos"];
+                            $sigla[]  =  $row["sigla_candidato"];
+
+                            
+                        }
+                        
                     }
-                ]
-                }');
+
+                    $ChartData = "{
+                        \"chart\": {
+                          \"showValues\":\"1\",
+                          \"showPercentInTooltip\" : \"0\",
+                          \"numberPrefix\" : \"$\",
+                          \"enableMultiSlicing\":\"1\",
+                          \"theme\": \"fusion\"
+                        },
+                        \"data\": [{
+                            \"label\": \"$sigla[0]\",
+                            \"value\": \"$total[0]\"
+                          }, {
+                            \"label\":\"$sigla[1]\",
+                            \"value\": \"$total[1]\"
+                          }, {
+                            \"label\": \"$sigla[2]\",
+                            \"value\": \"$total[2]\"
+                          }, {
+                            \"label\": \"$sigla[3]\",
+                            \"value\": \"$total[3]\"
+                          }, {
+                            \"label\": \"$sigla[4]\",
+                            \"value\": \"$total[4]\"
+                          }]
+                        }" ;
+                   
+                $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-1", "json",$ChartData);
+                
+              
+  
+                    
+                
+                
 
                 $columnChart->render();
 ?>

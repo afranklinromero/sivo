@@ -19,7 +19,7 @@ if(!empty($_POST["distrito_id"])){
     } 
 }elseif(!empty($_POST["recinto_id"])){ 
     // Fetch city data based on the specific state 
-    $query = "SELECT * FROM mesas WHERE id_recinto = ".$_POST['recinto_id'].""; 
+    $query = "SELECT * FROM mesas WHERE id_recinto = ".$_POST['recinto_id']." AND estado='1'"; 
     $result = $db->query($query); 
      
     // Generate HTML of city options list 
