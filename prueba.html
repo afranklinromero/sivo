@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <form id="asd" >form1 </form>
+    <form id="dos" style="display:none;">form2 </form>
+<button onclick="asd(1)">Hide</button>
+<button onclick="asd(2)">Show</button>
+
+<script>
+
+    function asd(a)
+{
+    if(a==1){
+    document.getElementById("asd").style.display="none";
+    document.getElementById("dos").style.display="block";
+}else{
+    document.getElementById("asd").style.display="block"
+    document.getElementById("dos").style.display="none";;
+}
+}
+</script>
+</body>
+</html>

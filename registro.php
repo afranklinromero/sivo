@@ -27,6 +27,18 @@ $result = $db->query($sql) ;
         
     <script src="js/themes/fusioncharts.theme.fusion.js"></script>
 
+    
+<script type="text/javascript">
+  function actualizar(){location.reload(true);}
+
+  setInterval("actualizar()",60000);
+
+  for( $i=6000; $i=0; i--){
+    document.write $i;
+  }
+</script>
+
+
     </head>
 <body>
 
@@ -53,56 +65,6 @@ $result = $db->query($sql) ;
     
   </div>
 </nav>
-<div class="container ">
-    
-            <table class="table table-striped">
-            <thead>
-                <tr>
-                
-                <th scope="col">Partido</th>
-                <th scope="col">Sigla</th>
-                <th scope="col">Votos</th>
-                
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) { 
-                    $id_sigla =  $row["sigla_candidato"];
-                    $resultado = $row["total"];
-                    $partido = $row["nombre_candidato"];
-                    ?>
-                
-                
-                <tr>
-                    <td><?php echo $partido; ?></td>
-                    <td><?php echo $id_sigla; ?></td>
-
-                    <td><?php echo $resultado;
-                    $sql = ('UPDATE `candidato` SET `total_votos`="'.$resultado.'" WHERE `sigla_candidato` = "'.$id_sigla.'"');
-                        $db->query($sql) ; 
-                ?> </td>
-                </tr>
-                <?php 
-                    }
-                } else {
-                    echo "0 results";
-                }
-                ?>
-                
-            
-            
-            </tbody>
-            </table>
-       
-</div>  
-
-
-
-
-
 
 
 
@@ -180,10 +142,12 @@ $result = $db->query($sql) ;
    
    
    <div class="row justify-content-md-center">
-   
+        <div clas="col"> 
+                    <div id="chart-container">Torta Solo Votos Validos</div>
+        </div>
     <div clas="col"> 
-                    
-                    <div id="chart-2" style ="width :20%;" ></div>
+     
+        <div id="chart-2" ></div>
     </div>
            
             <?php
@@ -201,6 +165,8 @@ $result = $db->query($sql) ;
         
                             $ChartData = "{
                                 \"chart\": {
+                                    \"caption\":\"Torta Votos Validos\",
+                                    
                                 \"showValues\":\"1\",
                                 \"showPercentInTooltip\" : \"0\",
                                 \"numberPrefix\" : \"\",
@@ -234,33 +200,67 @@ $result = $db->query($sql) ;
                                 }, {
                                     \"label\": \"$sigla[8]\",
                                     \"value\": \"$total[8]\"
-                                }, {
-                                    \"label\": \"$sigla[9]\",
-                                    \"value\": \"$total[9]\"
-                                }, {
-                                    \"label\": \"$sigla[10]\",
-                                    \"value\": \"$total[10]\"
-                                }, {
-                                    \"label\": \"$sigla[11]\",
-                                    \"value\": \"$total[11]\"
+                               
+                                
                                 }]
                                 }" ;
         
-                            $columnChart = new FusionCharts("pie3d", "ex1", "100%", 400, "chart-2", "json",$ChartData);
+                            $columnChart = new FusionCharts("pie3d", "ex1", "30%", 400, "chart-2", "json",$ChartData);
                             $columnChart->render();
             ?>
     
     
-    
-                <div clas="col"> 
-                        <div id="chart-container">Chart will render here!</div>
-                </div>
-    
-
         
      </div>
  
+     <div class="container ">
+    <?php
+     $sql = ("SELECT candidato.nombre_candidato, candidato.sigla_candidato , SUM(votos.cantidad) as total FROM votos inner JOIN candidato ON (votos.id_candidato=candidato.id_candidato) GROUP BY (candidato.sigla_candidato)");
+$result = $db->query($sql) ;
+?>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        
+        <th scope="col">Partido</th>
+        <th scope="col">Sigla</th>
+        <th scope="col">Votos</th>
+        
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result->fetch_assoc()) { 
+            $id_sigla =  $row["sigla_candidato"];
+            $resultado = $row["total"];
+            $partido = $row["nombre_candidato"];
+            ?>
+        
+        
+        <tr>
+            <td><?php echo $partido; ?></td>
+            <td><?php echo $id_sigla; ?></td>
 
+            <td><?php echo $resultado;
+            $sql = ('UPDATE `candidato` SET `total_votos`="'.$resultado.'" WHERE `sigla_candidato` = "'.$id_sigla.'"');
+                $db->query($sql) ; 
+        ?> </td>
+        </tr>
+        <?php 
+            }
+        } else {
+            echo "0 results";
+        }
+        ?>
+        
+    
+    
+    </tbody>
+    </table>
+
+</div>  
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

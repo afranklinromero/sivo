@@ -74,11 +74,25 @@ $resta = $total2 - $total;
 <br>
 <br>
 <div class="container text-center">
+
+<p>Datos: <?php $sql = "SELECT * FROM mesas where estado='1'"; 
+                            $suma = $db->query($sql) ;
+                            $total = $suma->num_rows;
+                            echo $total;
+                      ?> 
+            Mesas aun fatan regitrar</p>
+
+
+
+<input type="button" value="Actualizar" onclick="location.reload()"/>
+<br>
+<br>
+
 <?php
 // Widget appearance configuration
 $arrChartConfig = array(
 "chart" => array(
-"caption" => "Nordstrom's Customer Satisfaction Score for 2017",
+"caption" => "Avance de llenado de mesas",
 "lowerLimit" => "0",
 "upperLimit" => "100",
 "showValue" => "1",
@@ -122,13 +136,62 @@ $arrChartConfig = array(
 
 <br>
 <br>
-<br>
-<br>
-<br>
-
-</div>
 
 
+
+
+<div class="text-center">
+           
+Total de Votos validos : <?php 
+            
+            $sql = ("SELECT `sigla_candidato`, `total_votos` FROM `candidato`");
+$result = $db->query($sql) ;
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) { 
+      $valido_total[]  =  $row["total_votos"];
+    
+
+      
+  }
+
+
+
+  
+}
+
+$a1=$valido_total[0];
+$a2=$valido_total[1];
+$a3=$valido_total[2];
+$a4=$valido_total[3];
+$a5=$valido_total[4];
+$a6=$valido_total[5];
+$a7=$valido_total[6];
+$a8=$valido_total[7];
+$a9=$valido_total[8];
+$a10=$valido_total[9];
+$a11=$valido_total[10];
+
+$total_Valido = $a1+$a2+$a3+$a4+$a5+$a6+$a7+$a8+$a9;
+$total_blaco = $a10;
+$total_nulo = $a11;
+
+
+
+          echo $total_Valido;
+            ?>
+            </div>
+            <div class="text-center">
+           
+           Total de Votos Blanco : <?php echo $a10 ?>
+           </div>
+          
+           <div class="text-center">
+           
+Total de Votos Nulos : <?php echo $a11
+      ?>
+            </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

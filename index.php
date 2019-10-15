@@ -92,15 +92,11 @@ $result = $db->query($query);
     </div>
   </nav>
   
-    <form action ="" method="POST">
+<button onclick="ocultar(1)">Registro unico de mesa</button>
+<button onclick="ocultar(2)">Registro Manual</button>
+  <form id="dos" action ="" style="display:none;" method="POST" >
       <div class="container">
-            <p>Datos: <?php $sql = "SELECT * FROM mesas where estado='1'"; 
-                            $suma = $db->query($sql) ;
-                            $total = $suma->num_rows;
-                            echo $total;
-                      ?> 
-            Mesas aun fatan regitrar</p>
-        
+           
             <div class="form-row">
               <div class="form-group col-md-12">
                   <label >Distrito</label>
@@ -115,8 +111,7 @@ $result = $db->query($query);
                             echo '<option value="">no hay distritos</option>'; 
                             } 
                             ?>
-                        
-                        </select>
+                      </select>
               </div>
 
               <div class="form-group col-md-12">
@@ -134,7 +129,81 @@ $result = $db->query($query);
             
             </div>
       </div>
-<div class="">
+    
+  </form> 
+
+
+  <form id="uno" action ="" method="POST">
+      <div class="container">
+
+           <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label>Ingrese Registro Unico de Mesa: </label>
+                  <input type="text" id="rum" name="rum">
+            
+                  <button type="submit" name ="buscar"  value="buscar " class="btn btn-primary" >Buscar</button>
+              </div>
+              <?php
+              $rum=1;
+                  if(isset($_POST['buscar'])){ 
+                    $rum = $_POST['rum'];
+                    
+                  }
+                  
+                  $query_rum = "SELECT * FROM mesas WHERE  rum = '$rum'"; 
+                  $result_rum = $db->query($query_rum); 
+                  if ($result_rum->num_rows>0){
+                    while($num_rum = $result_rum->fetch_assoc()){
+
+                            
+                    }
+                  }
+                  
+                  
+              ?>
+
+             <div class="form-group col-md-12">
+                 <label>Distrito</label>
+                  <label id="distrito_label" name ="distrito_label" class="form-control"><?php
+                  
+                  hola
+                  
+                  ?>
+                  </div>
+                <div class="form-group col-md-12">         
+                <label>Recinto</label>
+                
+                <label id="recinto_label" name ="recinto_label" class="form-control">
+                </div>
+
+                <div class="form-group col-md-12">         
+                <label>Mesa</label>
+                
+                <label id="mesa_label" name ="mesa_label" class="form-control">
+                </div>
+              
+              </div>
+      </div>
+  </form>
+
+
+
+<script type="text/javascript">
+
+    function ocultar(a)
+{
+    if(a==1){
+    document.getElementById("dos").style.display="none";
+    document.getElementById("uno").style.display="block";
+}else{
+    document.getElementById("dos").style.display="block"
+    document.getElementById("uno").style.display="none";;
+}
+}
+</script>
+
+    
+<div>
         <div class="row justify-content-center align-items-center ">
             <div clas="col"> 
                 <div class="card" style="width: 7rem;">
@@ -256,20 +325,17 @@ $result = $db->query($query);
       </div>
         <br>
         <div class="container">
-        <button type="submit" name ="submit"  value="submit " class="btn btn-primary ">Registrar Voto</button>
+        
+        <div class="row">
+          <div class="col col-md-6">
+            <button type="submit" name ="submit"  value="submit " class="btn btn-primary" >Registrar Voto</button>
+            </div>
+          
+        </div>
         <br>
                           </div>
-  </div>
-    </form> 
-
-
-
-
-
-
-
+    </div>
     
-     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <?php
@@ -341,7 +407,7 @@ if(isset($_POST['submit'])){
 
 
 
-
+// An array of hash objects which stores data
 
 
 
