@@ -92,7 +92,7 @@ $result = $db->query($query);
     </div>
   </nav>
   
-<button onclick="ocultar(1)">Registro unico de mesa</button>
+<button onclick="ocultar(1)">Registro por Recinto</button>
 <button onclick="ocultar(2)">Registro Manual</button>
   <form id="dos" action ="" style="display:none;" method="POST" >
       <div class="container">
@@ -138,7 +138,7 @@ $result = $db->query($query);
 
            <div class="form-row">
               <div class="form-group col-md-12">
-                  <label>Ingrese Registro Unico de Mesa: </label>
+                  <label>Ingrese Codigo de recinto: </label>
                   <input type="text" id="rum" name="rum">
             
                   <button type="submit" name ="buscar"  value="buscar " class="btn btn-primary" >Buscar</button>
@@ -150,12 +150,13 @@ $result = $db->query($query);
                     
                   }
                   
-                  $query_rum = "SELECT * FROM mesas WHERE  rum = '$rum'"; 
+                  $query_rum = "SELECT * FROM codigo_recinto WHERE codigo_recinto = '$rum'"; 
                   $result_rum = $db->query($query_rum); 
+                  
                   if ($result_rum->num_rows>0){
                     while($num_rum = $result_rum->fetch_assoc()){
 
-                            
+
                     }
                   }
                   
@@ -166,7 +167,7 @@ $result = $db->query($query);
                  <label>Distrito</label>
                   <label id="distrito_label" name ="distrito_label" class="form-control"><?php
                   
-                  hola
+                  
                   
                   ?>
                   </div>
